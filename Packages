@@ -1,5 +1,19 @@
 Package: com.ruizi.floatinglyric
 Name: 悬浮歌词
+Version: 1.0.3
+Architecture: iphoneos-arm64e
+Section: Tweaks
+Depends: mobilesubstrate, firmware (>= 16.0)
+Installed-Size: 516
+Author: Ruiz1
+Maintainer: Ruiz1
+Filename: debs/com.ruizi.floatinglyric_1.0.3_iphoneos-arm64e.deb
+Size: 65196
+SHA256: 2752e156c53e913dfa7c75d41cc32a23dcb9b6b5164ded6c5a9bc128e18fc0cf
+Description: 锁屏与任意界面悬浮显示正在播放的歌词，文字颜色自动适应背景明暗，保证看得清。
+
+Package: com.ruizi.floatinglyric
+Name: 悬浮歌词
 Version: 1.0.2
 Architecture: iphoneos-arm64e
 Section: Tweaks
