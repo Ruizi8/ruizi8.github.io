@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>瑞子 · 个人越狱源</title>
+<meta name="description" content="瑞子的个人越狱源，收录自己开发的 iOS 插件。">
+<link rel="icon" href="icons/com.ruizi.floatinglyric.png">
+<style>
+  :root{
+    --bg:#0a0a0f; --bg2:#101018; --card:#15151f; --card2:#1c1c28;
+    --line:#262633; --txt:#f2f2f7; --dim:#8e8e9e; --dim2:#61616f;
+    --acc:#8b5cf6; --acc2:#a78bfa; --ok:#30d158;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg); color:var(--txt);
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro SC","PingFang SC","Microsoft YaHei",sans-serif;
+    line-height:1.65; -webkit-font-smoothing:antialiased;
+    min-height:100vh; overflow-x:hidden;
+  }
+  body::before{
+    content:""; position:fixed; inset:-30% -10% auto -10%; height:70vh; z-index:0;
+    background:radial-gradient(60% 60% at 50% 0%, rgba(139,92,246,.28), transparent 70%);
+    pointer-events:none;
+  }
+  .wrap{position:relative; z-index:1; max-width:680px; margin:0 auto; padding:56px 20px 72px}
+
+  /* 头部 */
+  .hero{text-align:center; margin-bottom:40px}
+  .logo{
+    width:92px; height:92px; border-radius:22px; display:block; margin:0 auto 18px;
+    box-shadow:0 18px 40px -12px rgba(139,92,246,.55), 0 0 0 1px rgba(255,255,255,.06);
+  }
+  h1{font-size:27px; letter-spacing:.5px; margin:0 0 8px; font-weight:700}
+  .sub{color:var(--dim); font-size:14.5px; margin:0}
+  .badges{display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-top:16px}
+  .badge{
+    font-size:12px; padding:4px 11px; border-radius:99px;
+    background:rgba(139,92,246,.13); color:var(--acc2);
+    border:1px solid rgba(139,92,246,.3); font-weight:500;
+  }
+
+  /* 地址卡 */
+  .source{
+    background:linear-gradient(180deg,var(--card2),var(--card));
+    border:1px solid var(--line); border-radius:18px; padding:20px; margin-bottom:18px;
+  }
+  .source .label{font-size:12px; color:var(--dim2); letter-spacing:1.2px; font-weight:600; margin-bottom:10px}
+  .urlrow{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+  .url{
+    flex:1 1 260px; font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    font-size:13.5px; color:var(--acc2); background:#0d0d15;
+    border:1px solid var(--line); border-radius:11px; padding:12px 14px;
+    overflow-x:auto; white-space:nowrap; user-select:all;
+  }
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:7px;
+    border:none; cursor:pointer; font-family:inherit; font-size:14px; font-weight:600;
+    padding:12px 20px; border-radius:11px; transition:.18s; text-decoration:none;
+  }
+  .btn-p{background:var(--acc); color:#fff; box-shadow:0 8px 22px -8px rgba(139,92,246,.8)}
+  .btn-p:active{transform:scale(.97); background:#7c4ff0}
+  .btn-g{background:rgba(255,255,255,.07); color:var(--txt); border:1px solid var(--line)}
+  .btn-g:active{transform:scale(.97); background:rgba(255,255,255,.12)}
+  .hint{font-size:12.5px; color:var(--dim2); margin:14px 0 0}
+  .hint b{color:var(--dim); font-weight:600}
+
+  /* 包卡片 */
+  .pkg{
+    background:var(--card); border:1px solid var(--line); border-radius:18px;
+    padding:20px; margin-bottom:14px; transition:.2s;
+  }
+  .pkg:hover{border-color:rgba(139,92,246,.4)}
+  .pkg-top{display:flex; gap:14px; align-items:flex-start}
+  .pkg-icon{width:58px;height:58px;border-radius:14px;flex:none;box-shadow:0 8px 20px -8px rgba(0,0,0,.8)}
+  .pkg-info{flex:1; min-width:0}
+  .pkg-name{font-size:16.5px; font-weight:650; margin:0 0 3px}
+  .pkg-id{font-family:ui-monospace,Menlo,monospace; font-size:11.5px; color:var(--dim2); margin:0 0 7px}
+  .pkg-desc{font-size:13.5px; color:var(--dim); margin:0}
+  .pkg-meta{display:flex; gap:14px; flex-wrap:wrap; margin-top:14px; padding-top:14px; border-top:1px solid var(--line); font-size:12px; color:var(--dim2)}
+  .pkg-meta span b{color:var(--dim); font-weight:600}
+  .pkg-actions{display:flex; gap:9px; margin-top:15px; flex-wrap:wrap}
+  .pkg-actions .btn{font-size:13px; padding:10px 16px; flex:1 1 auto}
+
+  /* 特性 */
+  .feats{display:grid; gap:10px; margin:26px 0 0}
+  .feat{display:flex; gap:12px; align-items:flex-start; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:15px 17px}
+  .feat .dot{width:7px;height:7px;border-radius:50%;background:var(--acc2);flex:none;margin-top:8px;box-shadow:0 0 10px var(--acc)}
+  .feat h4{margin:0 0 3px; font-size:14px; font-weight:600}
+  .feat p{margin:0; font-size:13px; color:var(--dim)}
+
+  h2{font-size:14px; letter-spacing:1.5px; color:var(--dim2); font-weight:600; margin:38px 0 14px}
+  footer{text-align:center; margin-top:52px; font-size:12px; color:var(--dim2); line-height:2}
+  footer a{color:var(--dim); text-decoration:none; border-bottom:1px solid var(--line)}
+
+  .toast{
+    position:fixed; left:50%; bottom:34px; transform:translate(-50%,20px);
+    background:var(--ok); color:#04210c; font-size:13.5px; font-weight:650;
+    padding:11px 22px; border-radius:99px; opacity:0; pointer-events:none;
+    transition:.25s; z-index:99; box-shadow:0 10px 30px -8px rgba(48,209,88,.6);
+  }
+  .toast.on{opacity:1; transform:translate(-50%,0)}
+  @media(max-width:480px){
+    .wrap{padding:40px 16px 60px}
+    h1{font-size:23px}
+    .logo{width:78px;height:78px;border-radius:19px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <img class="logo" src="icons/com.ruizi.floatinglyric.png" alt="瑞子">
+    <h1>瑞子</h1>
+    <p class="sub">个人越狱源 · 自己写的插件，只放自己用得上的</p>
+    <div class="badges">
+      <span class="badge">Relaxin / RootHide</span>
+      <span class="badge">iOS 16.0+</span>
+      <span class="badge">arm64e</span>
+    </div>
+  </div>
+
+  <div class="source">
+    <div class="label">源地址</div>
+    <div class="urlrow">
+      <div class="url" id="srcUrl">https://ruizi8.github.io/</div>
+      <button class="btn btn-p" onclick="copySrc()">复制</button>
+    </div>
+    <div class="pkg-actions">
+      <a class="btn btn-g" id="sileoBtn" href="#">用 Sileo 添加</a>
+      <a class="btn btn-g" id="cydiaBtn" href="#">用 Cydia 添加</a>
+    </div>
+    <p class="hint"><b>手动添加：</b>打开 Sileo → 软件源 → 右上角 ＋ → 粘贴上面的地址 → 添加。</p>
+  </div>
+
+  <h2>插件</h2>
+
+  <div class="pkg">
+    <div class="pkg-top">
+      <img class="pkg-icon" src="icons/com.ruizi.floatinglyric.png" alt="">
+      <div class="pkg-info">
+        <p class="pkg-name">悬浮歌词</p>
+        <p class="pkg-id">com.ruizi.floatinglyric</p>
+        <p class="pkg-desc">锁屏与任意界面悬浮显示正在播放的歌词，文字颜色自动适应背景明暗，保证看得清。</p>
+      </div>
+    </div>
+    <div class="pkg-meta">
+      <span>版本 <b>1.0.0</b></span>
+      <span>大小 <b>44 KB</b></span>
+      <span>要求 <b>iOS 16.0+</b></span>
+    </div>
+    <div class="pkg-actions">
+      <a class="btn btn-p" id="pkgSileo" href="#">Sileo 安装</a>
+      <a class="btn btn-g" href="debs/com.ruizi.floatinglyric_1.0.0_iphoneos-arm64e.deb" download>下载 .deb</a>
+    </div>
+  </div>
+
+  <div class="feats">
+    <div class="feat"><div class="dot"></div><div><h4>自动变色</h4><p>取当前画面平均色算亮度，按 WCAG 4.5:1 对比度挑字色，亮背景自动转深字，暗背景转亮字。</p></div></div>
+    <div class="feat"><div class="dot"></div><div><h4>跟着唱</h4><p>0.1 秒步进对齐时间轴，暂停、拖动进度条都能立刻跟上，切歌自动换词。</p></div></div>
+    <div class="feat"><div class="dot"></div><div><h4>任意界面悬浮</h4><p>不是只在锁屏，桌面、App 里都能浮着，位置随手拖动，重启后记得住。</p></div></div>
+    <div class="feat"><div class="dot"></div><div><h4>可调可关</h4><p>设置里有字号、透明度、位置、配色模式和歌词源，随时能关掉。</p></div></div>
+  </div>
+
+  <footer>
+    源内所有插件均为本人开发 · 仅自用分享<br>
+    <a href="Packages">Packages 索引</a> · <a href="Release">Release</a>
+  </footer>
+</div>
+
+<div class="toast" id="toast">已复制源地址</div>
+
+<script>
+  var SRC = location.origin + location.pathname.replace(/[^/]*$/, '');
+  SRC = SRC.replace(/\/$/, '') + '/';
+
+  document.getElementById('srcUrl').textContent = SRC;
+  document.getElementById('sileoBtn').href = 'sileo://source/' + SRC;
+  document.getElementById('cydiaBtn').href = 'cydia://url/https://cydia.saurik.com/api/share#?source=' + encodeURIComponent(SRC);
+  document.getElementById('pkgSileo').href = 'sileo://source/' + SRC;
+
+  function copySrc(){
+    var t = document.getElementById('toast');
+    function done(){ t.classList.add('on'); setTimeout(function(){ t.classList.remove('on'); }, 1600); }
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(SRC).then(done).catch(fallback);
+    } else { fallback(); }
+    function fallback(){
+      var ta = document.createElement('textarea');
+      ta.value = SRC; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); done(); } catch(e){}
+      document.body.removeChild(ta);
+    }
+  }
+</script>
+</body>
+</html>
