@@ -41,11 +41,12 @@ python3 scripts/make_index.py
 Repo/
 ├── Release                 源信息（名称、架构、说明）
 ├── Packages                自动生成的索引，别手改
+├── CydiaIcon.png           源图标（256×256），Sileo 里显示在源列表上
 ├── debs/                   所有 .deb 都放这
-├── icons/                  源图标，命名跟包标识一致
+├── icons/                  插件图标，文件名跟包标识一致
 ├── scripts/
 │   ├── make_index.py       扫描 debs/ 生成 Packages
-│   └── make_icon.py        生成源图标（纯标准库，无需 Pillow）
+│   └── make_icon.py        生成插件图标（纯标准库，无需 Pillow）
 ├── index.html              这个网页
 └── .nojekyll               让 Pages 原样输出，别走 Jekyll
 ```
@@ -54,5 +55,6 @@ Repo/
 
 - `Packages` 是生成物，手改会被下次自动提交覆盖。
 - 同名包放多个版本没问题，索引里按版本号倒序排，Sileo 默认装最新的。
-- 图标要和 `Package` 字段完全同名（`icons/com.ruizi.floatinglyric.png`），否则 Sileo 显示默认图标。
+- **源图标**是根目录的 `CydiaIcon.png`（固定文件名，不能改）；**插件图标**是 `icons/<包标识>.png`，两者互不影响。
+- 插件图标要和 `Package` 字段完全同名（`icons/com.ruizi.floatinglyric.png`），否则 Sileo 显示默认图标。
 - deb 架构要和 `Release` 里的 `Architectures` 对得上（这里是 `iphoneos-arm64e`，RootHide 专用）。
