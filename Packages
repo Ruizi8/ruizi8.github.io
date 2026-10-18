@@ -53,3 +53,17 @@ Filename: debs/com.ruizi.floatinglyric_1.0.0_iphoneos-arm64e.deb
 Size: 45210
 SHA256: d1553af783b17d714a1ba829756440730dd90f8d75577ae9be460fadc21ad76d
 Description: 锁屏与任意界面悬浮显示正在播放的歌词，文字颜色自动适应背景明暗，保证看得清。
+
+Package: com.ruizi.floatinglyric.safe
+Name: 悬浮歌词·急救包
+Version: 1.0.0
+Architecture: iphoneos-arm64e
+Section: Tweaks
+Depends: firmware (>= 16.0)
+Installed-Size: 8
+Author: Ruiz1
+Maintainer: Ruiz1
+Filename: debs/com.ruizi.floatinglyric.safe_1.0.0_iphoneos-arm64e.deb
+Size: 1032
+SHA256: 872a42871f022e9457485e9e872708400f92462114a79b707a070c67f39b61e6
+Description: 只做一件事：把悬浮歌词的注入关掉，让 SpringBoard 正常起来。装完注销即可，之后可随时卸载本包。
